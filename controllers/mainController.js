@@ -1,5 +1,11 @@
 const db = require("../db");
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * We use it to get all data from the database
+ */
 exports.get = (req, res) => {
    //get data from database
    db.any("SELECT * FROM todos")
@@ -13,6 +19,27 @@ exports.get = (req, res) => {
         error: err
     });
    });
+};
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * We use it to get data from the database by id
+ */
+exports.getById = (req, res) => {
+    const id = req.params.id;
+    db.one("SELECT * FROM todos WHERE id = $1", id)
+    .then((data) => {
+        res.json(data);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.json({
+            message: "Data not found",
+            error: err
+        });
+    });
 };
 
 /**

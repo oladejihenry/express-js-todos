@@ -1,3 +1,11 @@
-.env
 node_modules/
+dist/
+*.env*
 .DS_Store
+.vercel
+
+/generated/prisma
+
+/lib/generated/prisma
+
+/lib/generated/prisma

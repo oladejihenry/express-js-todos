@@ -1,12 +1,16 @@
-require("dotenv").config();
-const express = require("express");
-const mainRoutes = require("./routes/mainRoutes");
+import "dotenv/config";
+import express from "express";
+import mainRoutes from "./app/routes/mainRoutes";
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT;
+
+app.get("/", async (req, res) => {
+    res.send("Todo List API");
+});
 
 app.use("/api", mainRoutes);
 

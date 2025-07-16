@@ -1,12 +1,12 @@
 import express from "express";
-import mainController from "../controllers/mainController";
+import todoController from "../controllers/todoController";
 
 const router = express.Router();
 
-router.get("/todos", mainController.get);
-router.get("/todo/:id", mainController.getById);
-router.post("/todo", mainController.post);
-router.put("/todo/:id", mainController.put);
-router.delete("/todo/:id", mainController.deleteTodo);
+router.get("/todos", todoController.get);
+router.get("/todo/:id", todoController.getById);
+router.post("/todo", todoController.post);
+router.put("/todo/:id", todoController.put);
+router.delete("/todo/:id", todoController.deleteTodo);
 
 export default router;

@@ -2,7 +2,7 @@
   "name": "todo-list-api",
   "version": "1.0.0",
   "description": "Todo List API",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "start": "nodemon --exec ts-node server.ts",
     "build": "npm install"

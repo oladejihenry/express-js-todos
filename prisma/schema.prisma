@@ -6,12 +6,41 @@
 
 generator client {
   provider = "prisma-client-js"
-  // output   = "../lib/generated/prisma"
+  output   = "../lib/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Users {
+  id           Int        @id @default(autoincrement())
+  username     String     @unique
+  email        String     @unique
+  password     String
+  refreshToken String?
+  tokenVersion Int        @default(0)
+  lastLogin    DateTime?  @default(now())
+  sessions     Sessions[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  posts        Posts[]
+}
+
+model Sessions {
+  id           String   @id @default(uuid())
+  userId       Int?
+  user         Users?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ipAddress    String?  @db.VarChar(45)
+  userAgent    String?  @db.Text
+  payload      String?  @db.Text
+  lastActivity Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@index([lastActivity])
 }
 
 model Todos {
@@ -21,4 +50,14 @@ model Todos {
   status      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Posts {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    Users    @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
